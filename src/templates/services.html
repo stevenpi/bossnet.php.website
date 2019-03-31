@@ -1,40 +1,40 @@
-{% extends layout.html %}
+{% extends "layout.html" %}
 
-{% content block %}
-<h2>Wir bieten Ihnen folgende Dienstleistungen an</h2>
+{% block content %}
+<div class="row">
+    <div class="col s4">
+        <div class="card large">
+            <div class="card-image">
+                <img src="images/support.jpg">
+                <span class="card-title red">Support</span>
+            </div>
+            <div class="card-content">
+                <p>Haben Sie Computerprobleme? Benötigen Sie Unterstütung bei der Installation von IT-Systemen oder Sonstigem? Zögern Sie nicht uns zu Kontaktieren! Diese Dienstleistung wird in Bern und Umgebung angeboten, nach Absprache ist natürlich auch anderes Gebiet möglich.</p>
+            </div>
+        </div>
+    </div>
 
-<ul class="collection">
-    <li class="collection-item avatar">
-        <img src="images/logo.png" alt="" class="circle">
-        <span class="title">Title</span>
-        <p>First Line <br>
-            Second Line
-        </p>
-        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-    </li>
-    <li class="collection-item avatar">
-        <i class="material-icons circle">folder</i>
-        <span class="title">Title</span>
-        <p>First Line <br>
-            Second Line
-        </p>
-        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-    </li>
-    <li class="collection-item avatar">
-        <i class="material-icons circle green">insert_chart</i>
-        <span class="title">Title</span>
-        <p>First Line <br>
-            Second Line
-        </p>
-        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-    </li>
-    <li class="collection-item avatar">
-        <i class="material-icons circle red">play_arrow</i>
-        <span class="title">Title</span>
-        <p>First Line <br>
-            Second Line
-        </p>
-        <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
-    </li>
-</ul>
-{% endblock %}
+    <div class="col s4">
+        <div class="card large">
+            <div class="card-image">
+                <img src="images/website.jpg">
+                <span class="card-title red">Webseitenentwicklung</span>
+            </div>
+            <div class="card-content">
+                <p>Sie haben gerade eine Firma gegründet und möchten eine Webseite. Oder Ihre aktuelle Webseite entspricht noch nicht ganz Ihren Anforderungen? Schreiben Sie uns, wir können Ihnen in diesem Bereich weiterhelfen.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col s4">
+        <div class="card large">
+            <div class="card-image">
+                <img src="images/project.jpg">
+                <span class="card-title red">Sonstige Projekte</span>
+            </div>
+            <div class="card-content">
+                <p>Haben Sie interesse an eine andere Art Projekt? Möchten Sie bestimmte Prozesse automatisiert ablaufen lassen? Benötigen sie sonstige Management-Systeme? Gerne können wir Ihnen auch hier nach Absprache behilflich sein.</p>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
