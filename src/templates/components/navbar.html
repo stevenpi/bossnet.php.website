@@ -1,0 +1,41 @@
+  <div class="parallax-container" style="height: 25em;">
+      <div class="h100">
+
+          <nav class="nav-extended transparent z-depth-0" style="margin-bottom: 7em;">
+              <div class="nav-wrapper">
+                  <img href="#" class="brand-logo left" src="images/logo.png" style="height: 64px;">
+                  <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="material-icons">menu</i></a>
+                  <ul id="nav-mobile" class="right hide-on-med-and-down">
+                      <li><a href="#">Startseite</a></li>
+                      <li><a href="#">Dienstleistungen</a></li>
+                      <li><a href="#">News</a></li>
+                      <li><a href="#">Kontakt</a></li>
+                  </ul>
+              </div>
+          </nav>
+
+          <ul class="sidenav" id="mobile-demo">
+              <li><a href="#">Startseite</a></li>
+              <li><a href="#">Dienstleistungen</a></li>
+              <li><a href="#">News</a></li>
+              <li><a href="#">Kontakt</a></li>
+          </ul>
+
+          <h1 class="center-align" style="font-family: 'Lato', sans-serif; font-size: 36px; color: white;">IT-Lösungen in jedem Bereich.</h1>
+
+          <div class="parallax grey lighten-1">
+              <img src="images/welcome.jpg">
+          </div>
+      </div>
+  </div>
+
+  <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          var elems = document.querySelectorAll('.parallax');
+          var instances = M.Parallax.init(elems);
+
+          var elems = document.querySelectorAll('.sidenav');
+          var instances = M.Sidenav.init(elems);
+      });
+
+  </script>
