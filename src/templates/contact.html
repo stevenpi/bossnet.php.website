@@ -1,0 +1,124 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<h1>Schreiben Sie uns eine Email!</h1>
+<p>Bei Fragen, Anfragen oder auch sonstigem, zögern Sie nicht uns zu kontaktieren. Wir sind für sämtliche Anfragen offen. Sie können dazu das folgende Formular verwenden.</p>
+<div style="height: 32em;">
+    <div id="formcontainer" class="row">
+        <form class="col s6 offset-s3">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="email" type="email" class="validate">
+                    <label for="email">Ihre Email Adresse</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="subject" type="text">
+                    <label for="subject">Betreff</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea id="body" class="materialize-textarea"></textarea>
+                    <label for="body">Schreiben Sie ihre Mail</label>
+                </div>
+            </div>
+            <a id="sendButton" class="waves-effect waves-light btn red" onclick="sendEmail()"><i class="material-icons right">send</i>Senden</a>
+        </form>
+    </div>
+    <div id="imgcontainer" class="row">
+        <img class="col offset-s4" src="images/done.png" style="height: 25em">
+    </div>
+</div>
+<script type="application/javascript">
+    function sendEmail() {
+        disableSend();
+
+        if (!validateInput()) {
+            M.toast({
+                html: "Bitte versuchen Sie es erneut.",
+            });
+            enableSend();
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/contact/send",
+            data: {
+                'email': $("#email").val(),
+                'subject': $("#subject").val(),
+                'body': $("#body").val()
+            },
+            success: function(response) {
+                $("#formcontainer").addClass("moveOut");
+                $("#formcontainer").one("webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",
+                    function(event) {
+                        // Do something when the transition ends
+                        $("#formcontainer").css("display", "none");
+                        $("#imgcontainer").css("display", "block");
+                        setTimeout(function() {
+                            $("#imgcontainer").addClass("moveIn");
+                            M.toast({
+                                html: response,
+                            });
+                        }, 500);
+                    });
+            }
+        });
+    }
+
+    function validateInput() {
+        isValidMail = isEmail($("#email").val());
+        isValidSubject = isSubject($("#subject").val());
+        isValidBody = isBody($("#body").val());
+
+        return isValidMail && isValidSubject && isValidBody;
+    }
+
+    function disableSend() {
+        $("#sendButton").addClass("disabled");
+    }
+
+    function enableSend() {
+        $("#sendButton").removeClass("disabled");
+    }
+
+    function isEmail(email) {
+        var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        check = regex.test(email);
+        if (!check) {
+            M.toast({
+                html: "Bitte gültige Email Adresse eingeben.",
+            });
+        };
+        return check;
+    }
+
+    function isSubject(subject) {
+        check = !isEmpty(subject);
+        if (!check) {
+            M.toast({
+                html: "Bitte gültigen Betreff eingeben.",
+            });
+        };
+        return check;
+    }
+
+    function isBody(body) {
+        check = !isEmpty(body);
+        if (!check) {
+            M.toast({
+                html: "Bitte geben Sie die Nachricht ein.",
+            });
+        };
+        return check;
+    }
+
+    function isEmpty(stri) {
+        return (stri.length === 0 || !stri.trim());
+    };
+
+</script>
+{% endblock %}

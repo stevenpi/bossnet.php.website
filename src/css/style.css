@@ -1,1 +1,20 @@
+#formcontainer {
+    transition: all;
+    transition-duration: 400ms;
+}
 
+#formcontainer.moveOut {
+    transform: translateX(100%);
+}
+
+#imgcontainer {
+    display: none;
+    top: 37em;
+    transition: all;
+    transition-duration: 400ms;
+    transform: translateX(-100%);
+}
+
+#imgcontainer.moveIn {
+    transform: translateX(0);
+}
