@@ -18,3 +18,7 @@
 #imgcontainer.moveIn {
     transform: translateX(0);
 }
+
+.card-image > img {
+    height: 10em;
+}

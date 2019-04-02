@@ -13,6 +13,9 @@ if ("/services" == $actual_link) {
 else if ("/contact" == $actual_link) {
     echo $twig->render('contact.html');
 }
+else if ("/sitemap" == $actual_link) {
+    echo $twig->render('sitemap.html');
+}
 else if ("/contact/send" == $actual_link) {
     if( !isset($_POST['email']) || !isset($_POST['subject']) || !isset($_POST['body']) )
     {
