@@ -19,6 +19,41 @@
     transform: translateX(0);
 }
 
-.card-image > img {
+
+.sitemap-image {
     height: 10em;
+}
+
+p {
+    font-size: 15pt;
+}
+
+.services-p {
+    font-size: 13pt;
+}
+
+@media screen and (max-width : 1200px) {
+    .card-content > p {
+        font-size: 18pt;
+    }
+
+    .services-p {
+        font-size: 14pt !important;
+    }
+}
+
+@media screen and (max-width : 650px) {
+    .card-content > p {
+        font-size: 16pt;
+    }
+
+    .services-p {
+        font-size: 14pt !important;
+    }
+}
+
+@media screen and (max-width : 530px) {
+    .services-p {
+        font-size: 12pt !important;
+    }
 }
