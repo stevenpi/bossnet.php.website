@@ -1,3 +1,13 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
+
 #formcontainer {
     transition: all;
     transition-duration: 400ms;
@@ -53,7 +63,11 @@ p {
 }
 
 @media screen and (max-width : 530px) {
+    .card-content > p {
+        font-size: 14pt;
+    }
+
     .services-p {
-        font-size: 12pt !important;
+        font-size: 10pt !important;
     }
 }
