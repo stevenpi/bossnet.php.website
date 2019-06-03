@@ -17,19 +17,38 @@ else if ("/sitemap" == $actual_link) {
     echo $twig->render('sitemap.html');
 }
 else if ("/contact/send" == $actual_link) {
-    if( !isset($_POST['email']) || !isset($_POST['subject']) || !isset($_POST['body']) )
+    if( !isset($_POST['email']) || !isset($_POST['subject']) || !isset($_POST['body']) || !isset($_POST['token']) )
     {
         echo "Ein Fehler ist aufgetreten. Versuchen Sie es erneut, sofern der Fehler bestehen bleibt versuchen Sie es später nochmal.";
         return;
     }
     
-    if( empty($_POST['email']) || empty($_POST['subject']) || empty($_POST['body']) )
+    if( empty($_POST['email']) || empty($_POST['subject']) || empty($_POST['body']) || empty($_POST['token']) )
     {
         echo "Füllen Sie bitte alle Felder aus.";
         return;
     }
-    
-    
+
+    $secret = "6LdA5KYUAAAAADMdkL-Zf98KfH4OwErwfGfaMiFE";
+
+    $url = 'https://www.google.com/recaptcha/api/siteverify';
+    $data = array('secret' => $secret, 'response' => $_POST['token']);
+
+    $options = array(
+        'http' => array(
+            'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+            'method'  => 'POST',
+            'content' => http_build_query($data)
+        )
+    );
+    $context  = stream_context_create($options);
+    $response = file_get_contents($url, false, $context);
+    $responseKeys = json_decode($response,true);
+    if(!$responseKeys["success"]) {
+        echo "Ein Fehler ist aufgetreten. Versuchen Sie es erneut, sofern der Fehler bestehen bleibt versuchen Sie es später nochmal.";
+        return;
+    }
+
     $fromMailAdress = "bot@bossnet.ch";
     $recipients = array(
         'boss@bossnet.ch',
@@ -70,8 +89,6 @@ else if ("/contact/send" == $actual_link) {
     } catch (Exception $e) {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
-
-    
 }
 else {
     echo $twig->render('index.html');

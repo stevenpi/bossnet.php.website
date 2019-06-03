@@ -9,7 +9,7 @@
 <p>Bei Fragen, Anregungen oder anderem, zögern Sie nicht uns zu kontaktieren. Wir sind für sämtliche Anfragen offen. Sie können dazu das folgende Formular verwenden.</p>
 <div style="height: 32em;">
     <div id="formcontainer" class="row">
-        <form class="col s6 offset-s3">
+        <form id="contact_form" class="col s6 offset-s3">
             <div class="row">
                 <div class="input-field col s12">
                     <input id="email" type="email" class="validate">
@@ -35,6 +35,7 @@
         <img class="col offset-s4" src="images/done.png" style="height: 25em">
     </div>
 </div>
+<script src="https://www.google.com/recaptcha/api.js?render=6LdA5KYUAAAAAJxiVwggFWp_FbdLBBwmVu6GJrmW"></script>
 <script type="application/javascript">
     function sendEmail() {
         disableSend();
@@ -47,29 +48,38 @@
             return;
         }
 
-        $.ajax({
-            type: "POST",
-            url: "/contact/send",
-            data: {
-                'email': $("#email").val(),
-                'subject': $("#subject").val(),
-                'body': $("#body").val()
-            },
-            success: function(response) {
-                $("#formcontainer").addClass("moveOut");
-                $("#formcontainer").one("webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",
-                    function(event) {
-                        // Do something when the transition ends
-                        $("#formcontainer").css("display", "none");
-                        $("#imgcontainer").css("display", "block");
-                        setTimeout(function() {
-                            $("#imgcontainer").addClass("moveIn");
-                            M.toast({
-                                html: response,
+        grecaptcha.ready(function() {
+            // do request for recaptcha token
+            // response is promise with passed token
+            grecaptcha.execute('6LdA5KYUAAAAAJxiVwggFWp_FbdLBBwmVu6GJrmW', {action: 'create_comment'}).then(function(token) {
+                // add token to form
+                $('#contact_form').prepend('<input type="hidden" name="g-recaptcha-response" value="' + token + '">');
+                $.ajax({
+                    type: "POST",
+                    url: "/contact/send",
+                    data: {
+                        'email': $("#email").val(),
+                        'subject': $("#subject").val(),
+                        'body': $("#body").val(),
+                        'token': token
+                    },
+                    success: function(response) {
+                        $("#formcontainer").addClass("moveOut");
+                        $("#formcontainer").one("webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend",
+                            function(event) {
+                                // Do something when the transition ends
+                                $("#formcontainer").css("display", "none");
+                                $("#imgcontainer").css("display", "block");
+                                setTimeout(function() {
+                                    $("#imgcontainer").addClass("moveIn");
+                                    M.toast({
+                                        html: response,
+                                    });
+                                }, 500);
                             });
-                        }, 500);
-                    });
-            }
+                    }
+                });
+            });
         });
     }
 
